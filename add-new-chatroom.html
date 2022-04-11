@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ADD NEW CHATROOM</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<style>
+	.btnx:hover {
+	background-color: #009879 !important; /* Green */
+	color: white;
+	}
+	</style>
+</head>
+
+<body class="container" style="margin-top: 50px;
+	width: 50%; height:auto;">
+	
+	<h2 class="text-primary" style=
+		"margin-left: 15px; margin-bottom: 10px; color:#009879 !important;">
+		ADD NEW CHATROOM
+	</h2>
+		<h5 class="text-primary" style=
+		"margin-left: 15px; margin-bottom: 10px;color:#009879 !important; ">
+		ADD NEW CHATROOM BY ADDING NAME AND NDCID
+	</h5>
+	
+	<form class="container" id="contactForm">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Enter Chatroom Name
+					</label>
+					
+					<input type="text" class="form-control"
+					id="name" placeholder="Enter Chatroom name">
+				</div>
+
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						NDCID
+					</label>
+					
+					<input type="text" class="form-control"
+					id="url" placeholder="Enter NDCID">
+				</div>
+			</div>
+			<button type="submit" class="btn btnx btn-primary"
+				style="margin-left: 15px; margin-top: 10px;">
+				Submit
+			</button>
+		</div>
+	</form>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">	</script>
+	
+	<script>
+		var firebaseConfig = {
+    apiKey: "AIzaSyCFir4XlyJ9xym-3HzTxlMV711np1v3OWI",
+  authDomain: "amino-bd5f3.firebaseapp.com",
+  databaseURL: "https://amino-bd5f3-default-rtdb.firebaseio.com",
+  projectId: "amino-bd5f3",
+  storageBucket: "amino-bd5f3.appspot.com",
+  messagingSenderId: "97456021803",
+  appId: "1:97456021803:web:37a96e5054f07332ee256e",
+  measurementId: "G-S7SE3JBXCS"
+		};
+
+		firebase.initializeApp(firebaseConfig);
+
+		var messagesRef = firebase.database()
+			.ref('locations');
+		
+		document.getElementById('contactForm')
+			.addEventListener('submit', submitForm);
+
+		function submitForm(e) {
+			e.preventDefault();
+
+			// Get values
+			var name = getInputVal('name');
+			var url = getInputVal('url');
+
+			saveMessage(name, url);
+			document.getElementById('contactForm').reset();
+		}
+
+		// Function to get get form values
+		function getInputVal(id) {
+			return document.getElementById(id).value;
+		}
+
+		// Save message to firebase
+		function saveMessage(name, url) {
+			var newMessageRef = messagesRef.push();
+			newMessageRef.set({
+				name: name,
+				url: url,
+			});
+		}
+	</script>
+</body>
+
+</html>
