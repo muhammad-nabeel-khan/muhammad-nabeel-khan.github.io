@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>AMINO CHATROOMS</title>
+	
+	<style>
+	h1 {
+    text-align: center;
+}
+	.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	margin-left: auto;
+  margin-right: auto;
+	}
+	.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+	}
+	.styled-table th,
+	.styled-table td {
+    padding: 12px 15px;
+	}
+	.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+	}
+	.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+	}
+	.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+	}
+	.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+	}
+	.button {
+	background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+	}
+	.button:hover {
+	background-color: blue; /* Green */
+	color: white;
+	}
+	</style>
+	
+	
+  </head>
+  <body>
+  <h1>AMINO CHATROOMS</h1>
+
+    <table class="styled-table">
+    <thead><th>NAME</th><th>Enter the Chatroom</th>
+    </thead>
+  <tbody id='answer'></tbody>
+</table>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCFir4XlyJ9xym-3HzTxlMV711np1v3OWI",
+  authDomain: "amino-bd5f3.firebaseapp.com",
+  databaseURL: "https://amino-bd5f3-default-rtdb.firebaseio.com",
+  projectId: "amino-bd5f3",
+  storageBucket: "amino-bd5f3.appspot.com",
+  messagingSenderId: "97456021803",
+  appId: "1:97456021803:web:37a96e5054f07332ee256e",
+  measurementId: "G-S7SE3JBXCS"
+  };
+    firebase.initializeApp(firebaseConfig);
+    //establishes root of db
+    var rootRef = firebase.database().ref();
+    var ref = rootRef.child('locations');
+
+    function getZip() {
+    //creates ref for node
+    // gets values from database and changes html
+    ref.on('value', function(snap) {
+    //re-initializes answer in html, so doesn't repeat
+    document.getElementById("answer").innerHTML = "";
+    //gets values for each element in data set
+    snap.forEach(function(child){
+    var childData = child.val();
+    var names = childData.name;
+    var urls = childData.url;
+
+
+
+            document.getElementById("answer").innerHTML += "<tr class='active-row'><td class='name'>" + names + "</td><td class='url'><a href=https://aminoapps.com/partial/main-chat-window?ndcId=" + urls + "><button type='button' class='button'>enter</button></a></td></tr>";
+
+    });
+});
+      }
+// gets all data on page load by running getZip function.
+window.onload = getZip;
+</script>
+</body>
+</html>
